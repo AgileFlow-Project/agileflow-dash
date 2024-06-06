@@ -160,11 +160,11 @@ const SignUp = (): JSX.Element => {
     <>
       <Box display="flex">
         <Image
-          height="30px"
+          height="80px"
           ml="auto"
           mr="auto"
           my="40px"
-          src="/trello-logo.svg"
+          src="/agileflow-logo.svg"
           display="inline-block"
           alt="brand logo"
         />

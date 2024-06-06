@@ -12,10 +12,10 @@ const sendMail = (email, res, emailData, user) => {
   const msg = {
     to: email,
     from: 'dell41ankit@gmail.com',
-    subject: 'You are invited to join to a trello clone board',
+    subject: 'You are invited to join to a AgileFlow board',
     html: `<div>
       <div style="height:100px; background-color:#26292c; color: white">
-        <p>Trello Clone</p>
+        <p>AgileFlow</p>
       <div>
       <div style="height:200px; background-color:#0079bf;">
         <a href='${url}/${page}?token=${emailData.token}&email=${email}&boardId=${emailData.boardId}'>Join</a>
