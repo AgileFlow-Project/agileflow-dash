@@ -1,7 +1,7 @@
 {
   "name": "trello-clone",
   "version": "1.0.0",
-  "description": "A clone of trello app which does the basic features of real world trello",
+  "description": "Agileflow which does the basic features of real world trello",
   "scripts": {
     "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev",
     "build": "NODE_OPTIONS=--openssl-legacy-provider next build",

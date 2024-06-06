@@ -88,9 +88,6 @@ const UserNavBar: FC = () => {
         </Button>
       </Link>
       <Spacer />
-      <Box size="md" m="10px" color="white">
-        <SiTrello />
-      </Box>
       <Text fontWeight="bold" fontSize="20px" mt="2px" color="white">
         AgileFlow
       </Text>
