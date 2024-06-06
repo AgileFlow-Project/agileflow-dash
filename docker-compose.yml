@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/agileflow
+      - MONGODB_DB=agileflow
+      - JWT_SECRET_KEY=secret
+      - LOCAL_MONGODB=mongodb://mongodb:27017/agileflow
+      - SENDGRID_API_KEY=
+      - NEXT_PUBLIC_UNSPLASH_API=WvYnkpNt2C8oNd6M7UVsFNXw8iAEYtFYSAT0HcUXJaU
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
