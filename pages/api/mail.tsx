@@ -20,18 +20,26 @@ const sendMail = async (email, res, emailData, user) => {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: email,
-    subject: 'You are invited to join to a AgileFlow board',
-    html: `<div>
-      <div style="height:100px; background-color:#26292c; color: white">
-        <p>AgileFlow</p>
-      <div>
-      <div style="height:200px; background-color:#0079bf;">
-        <a href='${url}/${page}?token=${emailData.token}&email=${email}&boardId=${emailData.boardId}'>Join</a>
+    subject: 'You are invited to join an AgileFlow board',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #dcdcdc; border-radius: 10px;">
+        <div style="background-color: #26292c; padding: 20px; border-radius: 10px 10px 0 0;">
+          <h1 style="color: #ffffff; text-align: center;">AgileFlow</h1>
+        </div>
+        <div style="padding: 30px; background-color: #f4f4f4;">
+          <h2 style="color: #0079bf;">You are Invited!</h2>
+          <p style="font-size: 16px; color: #333;">Hello,</p>
+          <p style="font-size: 16px; color: #333;">You have been invited to join an AgileFlow board. Click the button below to accept the invitation and get started:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${url}/${page}?token=${emailData.token}&email=${email}&boardId=${emailData.boardId}" style="background-color: #0079bf; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-size: 16px;">Join AgileFlow</a>
+          </div>
+          <p style="font-size: 16px; color: #333;">If you did not expect this invitation, you can safely ignore this email.</p>
+        </div>
+        <div style="background-color: #26292c; padding: 20px; border-radius: 0 0 10px 10px; color: #ffffff; text-align: center;">
+          <p>AgileFlow &copy; 2024</p>
+        </div>
       </div>
-      <div style="height:100px; background-color:#26292c;">
-
-      </div>
-    </div>`
+    `
   };
 
   try {
