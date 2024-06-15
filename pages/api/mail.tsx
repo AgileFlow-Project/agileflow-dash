@@ -1,17 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
 import checkEnvironment from '@/util/check-environment';
-import sgMail from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 import shortId from 'shortid';
 import uniqid from 'uniqid';
 
-const sendMail = (email, res, emailData, user) => {
+const sendMail = async (email, res, emailData, user) => {
   const url = checkEnvironment();
   const page = 'signup';
 
-  const msg = {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
     to: email,
-    from: 'dell41ankit@gmail.com',
     subject: 'You are invited to join to a AgileFlow board',
     html: `<div>
       <div style="height:100px; background-color:#26292c; color: white">
@@ -26,20 +34,16 @@ const sendMail = (email, res, emailData, user) => {
     </div>`
   };
 
-  sgMail
-    .send(msg)
-    .then(() => {
-      res.send({ message: 'Email sent sucessfully', status: 200 });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.send({ message: 'Failed to send' });
-    });
+  try {
+    await transporter.sendMail(mailOptions);
+    res.send({ message: 'Email sent successfully', status: 200 });
+  } catch (error) {
+    console.error(error);
+    res.send({ message: 'Failed to send email', status: 500 });
+  }
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
   const { db, client } = await connectToDatabase();
 
   if (client.isConnected()) {
@@ -65,16 +69,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         await sendMail(email, res, emailData, user);
 
-        res.status(200);
-
         return;
       }
 
       default:
-        res.send({ message: 'DB error' });
+        res.status(400).send({ message: 'DB error' });
         break;
     }
   } else {
-    res.send({ msg: 'DB connection error', status: 400 });
+    res.status(400).send({ msg: 'DB connection error' });
   }
 }
